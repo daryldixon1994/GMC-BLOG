@@ -23,7 +23,7 @@ const RegisterValidation = (data) => {
             )
             .messages({
                 "string.min": "Password length must be at least 8 characters",
-                "string.pattern":
+                "string.pattern.base":
                     "The password must contain at least 1 lowercase, 1 uppercase, 1 numeric character, one special character",
                 "string.required": "email is a required field",
             }),

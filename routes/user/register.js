@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
         let salt = await bcrypt.genSalt(10);
         let hashedPassword = await bcrypt.hash(password, salt);
 
-        //CREATE NEW USER
+        // CREATE NEW USER
         const user = new User({
             firstName,
             lastName,
