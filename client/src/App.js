@@ -4,7 +4,7 @@ import Layout from "./components/views/Layout";
 import Register from "./components/views/Register";
 import Login from "./components/views/Login";
 import Blogs from "./components/views/Blogs";
-import MyBlogs from "./components/user/MyBlogs";
+import MyBlogs from "./components/views/user/MyBlogs";
 import axios from "axios";
 import { Routes, Route } from "react-router-dom";
 function App() {
