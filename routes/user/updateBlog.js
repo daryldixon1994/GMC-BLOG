@@ -1,7 +1,6 @@
 const Blog = require("../../models/Blog");
 module.exports = async (req, res) => {
     try {
-        // let { title, text, imgUrl } = req.body;
         let { _id } = req.query;
         let blog = await Blog.findByIdAndUpdate(
             _id,

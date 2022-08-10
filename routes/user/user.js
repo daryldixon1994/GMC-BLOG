@@ -1,16 +1,26 @@
 const express = require("express");
-const route = express.Router();
-
+const router = express.Router();
+const verify = require("../../middlewares/verifyToken");
+const Blog = require("./getBlogs");
 // /api/user/register : REGISTER
-route.post("/register", require("./register"));
+router.post("/register", require("./register"));
 
 // /api/user/login : LOGIN
-route.get("/login", require("./login"));
+router.get("/login", require("./login"));
 
 // /api/user/blog/create/:id: CREATE BLOG
-route.post("/blog/create/:id", require("./createBlog"));
+router.post("/blog/create/:id", verify, require("./createBlog"));
 
-// /api/user/blog/update/:id
-route.put("/blog/update/:id", require("./updateBlog"));
+// /api/user/blog/update :
+router.put("/blog/update", verify, require("./updateBlog"));
 
-module.exports = route;
+// /api/user/blog/delete
+router.delete("/blog/delete", verify, require("./deleteBlog"));
+
+// /api/user/blogs
+router.get("/blogs", Blog);
+
+// /api/user/myBlogs:id
+router.get("/myBlogs/:id", verify, require("./getUserBlogs"));
+
+module.exports = router;

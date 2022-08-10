@@ -2,6 +2,7 @@ const Blog = require("../../models/Blog");
 const User = require("../../models/User");
 module.exports = async (req, res) => {
     try {
+        // console.log(req.user);
         let { title, text, imgUrl } = req.body;
         let { id } = req.params;
         let user = await User.findById(id);

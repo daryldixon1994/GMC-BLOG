@@ -27,6 +27,8 @@ module.exports = async (req, res) => {
                 id: checkUser._id,
                 password: checkUser.password,
                 email: checkUser.email,
+                isUser: checkUser.isUser,
+                isAdmin: checkUser.isAdmin,
             },
             SECRET_KEY,
             { expiresIn: "10h" }
