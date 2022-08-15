@@ -50,7 +50,6 @@ module.exports = async (req, res) => {
         res.status(200).json({
             status: true,
             message: "User created successfully",
-            data: newUser,
         });
     } catch (error) {
         if (error) throw error;

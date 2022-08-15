@@ -1,9 +1,10 @@
 const Blog = require("../../models/Blog");
 module.exports = async (req, res) => {
     try {
-        let { _id } = req.query;
+        let { id } = req.query;
+        console.log(id);
         let blog = await Blog.findByIdAndUpdate(
-            _id,
+            id,
             {
                 $set: { ...req.body },
             },

@@ -25,13 +25,20 @@ code {
     position: sticky;
     top: 0px;
 }
-.Auth-form-container {
+.Auth-form-container-register {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100vh;
     margin-top: 70px;
+}
+.Auth-form-container-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
 }
 
 .Auth-form {
@@ -60,4 +67,46 @@ label {
     font-size: 14px;
     font-weight: 600;
     color: rgb(34, 34, 34);
+}
+.blogs-container {
+    /* border: 1px solid red; */
+    min-height: 300vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: space-around;
+}
+#blog-item-container {
+    /* border: 1px solid black; */
+    box-shadow: 0px 4px 17px -8px rgba(0, 0, 0, 0.75);
+    min-height: 60vh;
+    width: 30%;
+    margin: 10px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+}
+#drop-btn {
+    align-self: flex-end;
+}
+#blog-item-container h2 {
+    /* width: 70%; */
+    text-align: center;
+    color: red;
+}
+.blogs-nbre {
+    background-color: white;
+    color: #212529;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    left: 450px;
+    top: 10px;
+    z-index: 5;
+    font-family: Arial, Helvetica, sans-serif;
 }

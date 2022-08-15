@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "server": "nodemon server.js",
+        "server": "nodemon server.js --ignore client",
         "client": "cd client && npm start",
         "dev": "concurrently \"npm run server\" \"npm run client\""
     },
@@ -19,6 +19,7 @@
         "joi": "^17.6.0",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^6.5.0",
-        "nodemon": "^2.0.19"
+        "nodemon": "^2.0.19",
+        "react-router-dom": "^6.3.0"
     }
 }
