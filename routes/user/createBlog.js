@@ -2,14 +2,22 @@ const Blog = require("../../models/Blog");
 const User = require("../../models/User");
 module.exports = async (req, res) => {
     try {
-        // console.log(req.user);
-        let { title, text, imgUrl } = req.body;
+        let { title, text } = req.body;
         let { id } = req.params;
         let user = await User.findById(id);
         const blog = new Blog({
             title,
             text,
-            imgUrl,
+            photos:
+                req.files.length !== 0
+                    ? req.files.map(
+                          (elt) =>
+                              `${req.protocol}://${req.get("host")}/uploads/${
+                                  elt.filename
+                              }`
+                      )
+                    : "/uploads/addPhotos.png",
+
             owner: `${user.firstName} ${user.lastName}`,
             userId: user._id,
         });

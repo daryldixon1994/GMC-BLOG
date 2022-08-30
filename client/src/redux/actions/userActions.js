@@ -1,5 +1,5 @@
 import axios from "axios";
-export const getBlogs = (payload) => (dispatch) => {
+export const getMyBlogs = (payload) => (dispatch) => {
     axios
         .get(`/api/user/myBlogs/${payload.id}`, {
             headers: {
@@ -9,5 +9,5 @@ export const getBlogs = (payload) => (dispatch) => {
         .then((res) => {
             dispatch({ type: "GET_USER_BLOGS", payload: res.data.blogs });
         })
-        .catch();
+        .catch((err) => console.log(err));
 };

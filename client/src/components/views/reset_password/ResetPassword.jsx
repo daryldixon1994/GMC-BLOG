@@ -1,29 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Alert from "react-bootstrap/Alert";
-
-function Login() {
-    const [user, setUser] = useState({});
+import { Link } from "react-router-dom";
+import "../login/Login.css";
+function ResetPassword() {
+    const { id } = useParams();
+    //LOCAL STATES
+    const [newPassword, setNewPassword] = useState({});
     const [error, setError] = useState("");
-    const handleChange = (e) => {
-        setUser({ ...user, [e.target.name]: e.target.value });
-    };
+
+    //FUNCTIONS
     const navigate = useNavigate();
-    const handleLogin = async () => {
+    //HANDLE EVENTS
+    const handleChange = (e) => {
+        setNewPassword({ ...newPassword, [e.target.name]: e.target.value });
+    };
+    const handleReset = async () => {
         await axios
-            .post("/api/user/login", user)
+            .put(`/api/user/resetpassword/${id}`, newPassword)
             .then((res) => {
-                localStorage.setItem("token", res.data.token);
-                localStorage.setItem("isUser", res.data.isUser);
-                localStorage.setItem("id", res.data.id);
-                navigate("/myBlogs");
+                console.log("ok");
+                console.log(res);
+                navigate("/login");
             })
             .catch((err) => {
-                // console.dir(err);
+                console.dir(err);
                 setError(err.response.data.message);
             });
     };
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setError("");
+    //     }, 6000);
+    // }, [error]);
     return (
         <div className="Auth-form-container-login">
             <form
@@ -33,51 +43,46 @@ function Login() {
                 }}
             >
                 <div className="Auth-form-content">
-                    <h3 className="Auth-form-title">Sign In</h3>
+                    <h3 className="Auth-form-title">Reset your password</h3>
 
                     <div className="form-group mt-3">
-                        <label>Email address</label>
+                        <label>New password</label>
                         <input
-                            type="email"
+                            type="password"
                             className="form-control mt-1"
                             placeholder="Enter email"
-                            name="email"
+                            name="newPassword"
                         />
-                        {error && (
-                            <span style={{ color: "red", fontSize: "0.8em" }}>
-                                {/* <Alert key={"danger"} variant={"danger"}> */}
-                                {error}
-                                {/* </Alert> */}
-                            </span>
-                        )}
                     </div>
                     <div className="form-group mt-3">
-                        <label>Password</label>
+                        <label>Confirm New Password</label>
                         <input
                             type="password"
                             className="form-control mt-1"
                             placeholder="Enter password"
-                            name="password"
+                            name="confirmNewPassword"
                         />
                     </div>
+                    {/* {error && (
+                        <span style={{ color: "red", fontSize: "0.8em" }}>
+                            {error}
+                        </span>
+                    )} */}
                     <div className="d-grid gap-2 mt-3">
                         <button
                             type="button"
                             className="btn btn-primary"
                             onClick={() => {
-                                handleLogin();
+                                handleReset();
                             }}
                         >
                             Submit
                         </button>
                     </div>
-                    <p className="forgot-password text-right mt-2">
-                        Forgot <a href="#">password?</a>
-                    </p>
                 </div>
             </form>
         </div>
     );
 }
 
-export default Login;
+export default ResetPassword;

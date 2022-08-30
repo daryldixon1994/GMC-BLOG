@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
         if (!checkUser) {
             return res.status(401).json({
                 status: false,
-                message: "Wrong e-mail or password, please verify again",
+                message: "Wrong e-mail or password, please try again",
             });
         }
         //CHECK THE PASSWORD
@@ -18,7 +18,13 @@ module.exports = async (req, res) => {
         if (!match) {
             return res.status(401).json({
                 status: false,
-                message: "Wrong e-mail or password, please verify again",
+                message: "Wrong e-mail or password, please try again",
+            });
+        }
+        if (!checkUser.isVerified) {
+            return res.status(401).json({
+                status: false,
+                message: "Your email is not verified, please check your email.",
             });
         }
         //CREATE TOKEN

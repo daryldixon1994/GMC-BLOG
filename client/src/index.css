@@ -11,63 +11,7 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
-.me-auto {
-    width: 100%;
 
-    display: flex;
-    justify-content: flex-start;
-}
-.login {
-    position: relative;
-    left: 75%;
-}
-.nav-container {
-    position: sticky;
-    top: 0px;
-}
-.Auth-form-container-register {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-    margin-top: 70px;
-}
-.Auth-form-container-login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-}
-
-.Auth-form {
-    width: 420px;
-    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
-    padding-top: 30px;
-    padding-bottom: 20px;
-    border-radius: 8px;
-    background-color: white;
-}
-
-.Auth-form-content {
-    padding-left: 12%;
-    padding-right: 12%;
-}
-
-.Auth-form-title {
-    text-align: center;
-    margin-bottom: 1em;
-    font-size: 24px;
-    color: rgb(34, 34, 34);
-    font-weight: 800;
-}
-
-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: rgb(34, 34, 34);
-}
 .blogs-container {
     /* border: 1px solid red; */
     min-height: 300vh;
@@ -88,25 +32,16 @@ label {
 }
 #drop-btn {
     align-self: flex-end;
+    position: absolute;
+    /* top: 10px; */
+    z-index: 1;
 }
 #blog-item-container h2 {
     /* width: 70%; */
     text-align: center;
     color: red;
 }
-.blogs-nbre {
-    background-color: white;
-    color: #212529;
-    text-align: center;
+.btn-light {
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    position: absolute;
-    left: 450px;
-    top: 10px;
-    z-index: 5;
-    font-family: Arial, Helvetica, sans-serif;
 }

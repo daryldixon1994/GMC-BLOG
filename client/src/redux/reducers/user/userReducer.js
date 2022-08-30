@@ -1,5 +1,5 @@
 const initialState = {
-    blogs: [],
+    myblogs: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -9,7 +9,7 @@ const userReducer = (state = initialState, action) => {
         case "GET_USER_BLOGS":
             return {
                 ...state,
-                blogs: payload,
+                myblogs: payload,
             };
         default:
             return state;

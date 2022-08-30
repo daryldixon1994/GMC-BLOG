@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import axios from "axios";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal, Col, Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-function BlogItem({ title, owner, text, imgUrl, _id }) {
+function BlogItem({ title, owner, text, imgUrl, _id, userId, createdAt }) {
+    // console.log(typeof userId);
     //CONSTANTS
     const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
@@ -42,8 +44,66 @@ function BlogItem({ title, owner, text, imgUrl, _id }) {
             .then((res) => console.log(res))
             .catch((err) => console.dir(err));
     };
+    const date = createdAt.slice(0, 10);
+    const hour = createdAt.slice(11, 16);
     return (
-        <div id="blog-item-container">
+        <div className="">
+            <Col>
+                <Card style={{ minHeight: " 364px" }}>
+                    {id === userId && (
+                        <div id="drop-btn">
+                            <DropdownButton
+                                id={`dropdown-button-drop`}
+                                size="sm"
+                                variant="light"
+                                title=""
+                            >
+                                <Dropdown.Item
+                                    eventKey="1"
+                                    onClick={() => {
+                                        handleShow();
+                                    }}
+                                >
+                                    Update Blog
+                                </Dropdown.Item>
+                                <Dropdown.Divider />
+                                <Dropdown.Item
+                                    eventKey="2"
+                                    onClick={() => {
+                                        handleDelete();
+                                    }}
+                                >
+                                    Delete Blog
+                                </Dropdown.Item>
+                            </DropdownButton>
+                        </div>
+                    )}
+
+                    <Card.Img
+                        variant="top"
+                        bsPrefix="card-img"
+                        src={imgUrl}
+                        width={312}
+                        height={160}
+                        style={{ objectFit: "cover" }}
+                    />
+                    <Card.Body>
+                        <Card.Title as="h4">{title}</Card.Title>
+                        <Card.Subtitle as="h6">{owner}</Card.Subtitle>
+                        <br />
+                        <Card.Text as="q">
+                            {text.slice(0, 100)}...
+                            <Card.Link as={Link} to={`/blog/${_id}`}>
+                                read more
+                            </Card.Link>
+                        </Card.Text>
+                    </Card.Body>
+                    <Card.Footer className="text-muted">
+                        {date} at {hour}&nbsp;
+                    </Card.Footer>
+                </Card>
+            </Col>
+
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
@@ -96,39 +156,6 @@ function BlogItem({ title, owner, text, imgUrl, _id }) {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <div id="drop-btn">
-                <DropdownButton
-                    // as={ButtonGroup}
-                    id={`dropdown-button-drop`}
-                    size="sm"
-                    variant="light"
-                    title=""
-                >
-                    <Dropdown.Item
-                        eventKey="1"
-                        onClick={() => {
-                            handleShow();
-                        }}
-                    >
-                        Update Blog
-                    </Dropdown.Item>
-                    <Dropdown.Divider />
-                    <Dropdown.Item
-                        eventKey="2"
-                        onClick={() => {
-                            handleDelete();
-                        }}
-                    >
-                        Delete Blog
-                    </Dropdown.Item>
-                </DropdownButton>
-            </div>
-            <div>
-                <h2> {title} </h2>
-                <h4> {owner} </h4>
-                <p> {text} </p>
-                <img src={imgUrl} alt="blog-image" width={400} />
-            </div>
         </div>
     );
 }

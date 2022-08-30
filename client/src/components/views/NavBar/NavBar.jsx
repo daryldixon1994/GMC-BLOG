@@ -3,6 +3,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button, Form, Modal } from "react-bootstrap";
+import "./NavBar.css";
 import axios from "axios";
 function NavBar() {
     //CONSTANTS
@@ -11,9 +12,10 @@ function NavBar() {
     //MY LOCAL STATES
     const [show, setShow] = useState(false);
     const [newBlog, setNewBlog] = useState({});
-
+    const [newFile, setNewFile] = useState();
+    console.log("newFile", newFile);
     //MY BLOGS STATE FROM REDUX
-    const myBlogs = useSelector((state) => state.userReducer.blogs);
+    const myBlogs = useSelector((state) => state.userReducer.myblogs);
     const navigate = useNavigate();
     //CLOSE MODAL
     const handleClose = () => setShow(false);
@@ -23,6 +25,7 @@ function NavBar() {
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("isUser");
+        localStorage.removeItem("id");
         navigate("login");
     };
     // HANDLE CHANGE NEW BLOG
@@ -30,11 +33,22 @@ function NavBar() {
         setNewBlog({ ...newBlog, [e.target.name]: e.target.value });
     };
     //CREATE NEW BLOG
+    const handleFile = (e) => {
+        setNewFile(e.target.files);
+        console.log("files", e.target.files);
+    };
     const handelSaveNewBlog = () => {
+        let blogFormData = new FormData();
+        blogFormData.append("title", newBlog.title);
+        blogFormData.append("text", newBlog.text);
+        for (let i = 0; i < newFile.length; i++) {
+            blogFormData.append("photos", newFile[i]);
+        }
         axios
-            .post(`/api/user/blog/create/${id}`, newBlog, {
+            .post(`/api/user/blog/create/${id}`, blogFormData, {
                 headers: {
                     jwt: token,
+                    "Content-Type": "multipart/form-data",
                 },
             })
             .then((res) => {
@@ -50,11 +64,23 @@ function NavBar() {
                     <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form
-                        onChange={(e) => {
-                            handleChange(e);
-                        }}
-                    >
+                    <Form>
+                        <Form.Group
+                            controlId="formFileMultiple"
+                            className="mb-3"
+                        >
+                            <Form.Label>
+                                Multiple files input example
+                            </Form.Label>
+                            <Form.Control
+                                type="file"
+                                name="photo"
+                                multiple
+                                onChange={(e) => {
+                                    handleFile(e);
+                                }}
+                            />
+                        </Form.Group>
                         <Form.Group
                             className="mb-3"
                             controlId="exampleForm.ControlInput1"
@@ -65,18 +91,9 @@ function NavBar() {
                                 name="title"
                                 placeholder="write yor blog's name here"
                                 autoFocus
-                            />
-                        </Form.Group>
-                        <Form.Group
-                            className="mb-3"
-                            controlId="exampleForm.ControlInput1"
-                        >
-                            <Form.Label>Image : </Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="imgUrl"
-                                placeholder="paste your image url here"
-                                autoFocus
+                                onChange={(e) => {
+                                    handleChange(e);
+                                }}
                             />
                         </Form.Group>
                         <Form.Group
@@ -84,7 +101,14 @@ function NavBar() {
                             controlId="exampleForm.ControlTextarea1"
                         >
                             <Form.Label>Blog :</Form.Label>
-                            <Form.Control name="text" as="textarea" rows={5} />
+                            <Form.Control
+                                name="text"
+                                as="textarea"
+                                rows={5}
+                                onChange={(e) => {
+                                    handleChange(e);
+                                }}
+                            />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -99,7 +123,9 @@ function NavBar() {
             </Modal>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand>GOMYCODE BLOGS</Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/">
+                        GOMYCODE BLOGS
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
@@ -111,10 +137,15 @@ function NavBar() {
                                 <>
                                     <Nav.Link as={Link} to="/myBlogs">
                                         My Blogs
-                                        <div className="blogs-nbre">
-                                            {" "}
-                                            {myBlogs.length}{" "}
-                                        </div>
+                                        <span className="blogs-nbre">
+                                            {myBlogs.length}
+                                        </span>
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        className="login"
+                                        onClick={handleShow}
+                                    >
+                                        Add blog
                                     </Nav.Link>
                                     <Nav.Link
                                         as={Link}
@@ -124,13 +155,7 @@ function NavBar() {
                                             handleLogout();
                                         }}
                                     >
-                                        LogOut
-                                    </Nav.Link>
-                                    <Nav.Link
-                                        className="login"
-                                        onClick={handleShow}
-                                    >
-                                        Add blog
+                                        Logout
                                     </Nav.Link>
                                 </>
                             ) : (
