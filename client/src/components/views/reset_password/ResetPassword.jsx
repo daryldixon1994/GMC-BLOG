@@ -20,7 +20,6 @@ function ResetPassword() {
         await axios
             .put(`/api/user/resetpassword/${id}`, newPassword)
             .then((res) => {
-                console.log("ok");
                 console.log(res);
                 navigate("/login");
             })

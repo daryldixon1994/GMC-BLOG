@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Container, Col, Carousel, Modal, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { DotLoader } from "react-spinners";
+import { SyncLoader } from "react-spinners";
 import Caroussel from "./Caroussel";
 function BlogPage() {
     const [blog, setBlog] = useState();
@@ -25,7 +25,7 @@ function BlogPage() {
         setShow(true);
     }
     return (
-        <>
+        <div>
             {blog ? (
                 <Container
                     style={{
@@ -76,13 +76,11 @@ function BlogPage() {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md>
-                            <Caroussel
-                                setFullscreen={setFullscreen}
-                                blog={blog}
-                                handleShow={handleShow}
-                            />
-                        </Col>
+                        <Caroussel
+                            setFullscreen={setFullscreen}
+                            blog={blog}
+                            handleShow={handleShow}
+                        />
                     </Row>
                     <Row
                         style={{
@@ -96,9 +94,16 @@ function BlogPage() {
                     </Row>
                 </Container>
             ) : (
-                <>
-                    <DotLoader color="#00ffa3" />
-                </>
+                <div
+                    style={{
+                        position: "absolute",
+                        top: "50%",
+                        left: "50%",
+                    }}
+                >
+                    <SyncLoader size={15} color="#212529" />
+                    Loading...
+                </div>
             )}
 
             <Modal
@@ -117,7 +122,7 @@ function BlogPage() {
                     />
                 </Modal.Body>
             </Modal>
-        </>
+        </div>
     );
 }
 

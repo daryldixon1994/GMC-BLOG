@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import axios from "axios";
 import { Button, Form, Modal, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
-function BlogItem({ title, owner, text, imgUrl, _id, userId, createdAt }) {
+function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
     // console.log(typeof userId);
     //CONSTANTS
     const id = localStorage.getItem("id");
@@ -46,6 +47,15 @@ function BlogItem({ title, owner, text, imgUrl, _id, userId, createdAt }) {
     };
     const date = createdAt.slice(0, 10);
     const hour = createdAt.slice(11, 16);
+    const [width, setWidth] = useState(0);
+    const carrousel = useRef();
+    useEffect(() => {
+        // console.log(
+        //     carrousel.current.scrollWidth,
+        //     carrousel.current.offsetWidth
+        // );
+        setWidth(carrousel.current.scrollWidth - carrousel.current.offsetWidth);
+    }, []);
     return (
         <div className="">
             <Col>
@@ -79,14 +89,38 @@ function BlogItem({ title, owner, text, imgUrl, _id, userId, createdAt }) {
                         </div>
                     )}
 
-                    <Card.Img
-                        variant="top"
-                        bsPrefix="card-img"
-                        src={imgUrl}
-                        width={312}
-                        height={160}
-                        style={{ objectFit: "cover" }}
-                    />
+                    <div>
+                        <motion.div ref={carrousel} className="carrousel">
+                            <motion.div
+                                drag="x"
+                                dragConstraints={{ right: 0, left: -width }}
+                                whileTap={{ cursor: "grabbing" }}
+                                className="inner-carrousel"
+                            >
+                                {photos.map((image) => {
+                                    return (
+                                        <motion.div
+                                            className="blog-item-image"
+                                            key={image}
+                                        >
+                                            <Card.Img
+                                                className="img"
+                                                variant="top"
+                                                bsPrefix="card-img"
+                                                src={image}
+                                                alt="image-house"
+                                                style={{
+                                                    objectFit: "cover",
+                                                    cursor: "zoom-in",
+                                                }}
+                                            />
+                                        </motion.div>
+                                    );
+                                })}
+                            </motion.div>
+                        </motion.div>
+                    </div>
+
                     <Card.Body>
                         <Card.Title as="h4">{title}</Card.Title>
                         <Card.Subtitle as="h6">{owner}</Card.Subtitle>

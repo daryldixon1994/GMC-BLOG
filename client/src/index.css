@@ -45,3 +45,33 @@ code {
     display: flex;
     align-items: center;
 }
+.item {
+    min-height: 20rem;
+    min-width: 30rem;
+    padding: 0px 20px 0px 20px;
+}
+.item img {
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    pointer-events: none;
+}
+.blog-item-image {
+    height: 132px !important;
+    padding: 5px 5px 0px 5px;
+}
+.blog-item-image .img {
+    width: 250px;
+    height: 100%;
+    border-radius: 1rem;
+    pointer-events: none;
+}
+.inner-carrousel {
+    display: flex;
+    /* background: lightblue; */
+}
+.carrousel {
+    cursor: grab;
+    overflow: hidden;
+    /* background: rgb(230, 173, 173); */
+}

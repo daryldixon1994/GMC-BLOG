@@ -14,7 +14,9 @@ const NewPasswordValidation = (data) => {
                 "string.min": "Password length must be at least 8 characters",
                 "string.pattern.base":
                     "The password must contain at least one lowercase, one uppercase, one numeric character, one special character",
-                "string.required": "email is a required field",
+                "string.required": "Password is a required",
+                "string.empty": "Password is not allowed to be empty",
+                "any.required": "Password is not allowed to be empty",
             }),
         confirmNewPassword: Joi.any()
             .equal(Joi.ref("newPassword"))

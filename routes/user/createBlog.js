@@ -1,6 +1,8 @@
 const Blog = require("../../models/Blog");
 const User = require("../../models/User");
 module.exports = async (req, res) => {
+    console.log("req files", req.files);
+    console.log("req body", req.body);
     try {
         let { title, text } = req.body;
         let { id } = req.params;

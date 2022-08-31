@@ -1,26 +1,34 @@
 import React, { useState } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar, Dropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button, Form, Modal } from "react-bootstrap";
+import { IoSettingsSharp } from "react-icons/io5";
 import "./NavBar.css";
 import axios from "axios";
+import ModalChangePassword from "./ModalChangePassword";
 function NavBar() {
     //CONSTANTS
     const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
     //MY LOCAL STATES
-    const [show, setShow] = useState(false);
     const [newBlog, setNewBlog] = useState({});
+    const [showSettings, setShowSettings] = useState(false);
     const [newFile, setNewFile] = useState();
-    console.log("newFile", newFile);
+
     //MY BLOGS STATE FROM REDUX
     const myBlogs = useSelector((state) => state.userReducer.myblogs);
     const navigate = useNavigate();
-    //CLOSE MODAL
+    //MODAL HANDLING
+    const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    //CLOSE SHOW
     const handleShow = () => setShow(true);
+    //Password MODAL HANDLING
+    const [showPasswordModal, setShowPasswordModal] = useState(false);
+    const handleClosePasswordModal = () => setShowPasswordModal(false);
+    const handleShowPasswordModal = () => setShowPasswordModal(true);
+
+    const handleShowSetting = () => setShowSettings(!showSettings);
     //HANDLE LOGOUT
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -35,7 +43,6 @@ function NavBar() {
     //CREATE NEW BLOG
     const handleFile = (e) => {
         setNewFile(e.target.files);
-        console.log("files", e.target.files);
     };
     const handelSaveNewBlog = () => {
         let blogFormData = new FormData();
@@ -59,9 +66,94 @@ function NavBar() {
     };
     return (
         <div className="nav-container">
+            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                <Container>
+                    <Navbar.Brand as={Link} to="/">
+                        GOMYCODE BLOGS
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto">
+                            <Nav.Link as={Link} to="/">
+                                Home
+                            </Nav.Link>
+
+                            {localStorage.getItem("token") &&
+                            localStorage.getItem("isUser") ? (
+                                <>
+                                    <Nav.Link as={Link} to="/myBlogs">
+                                        My Blogs
+                                        <span className="blogs-nbre">
+                                            {myBlogs.length}
+                                        </span>
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        className="login"
+                                        onClick={() => {
+                                            handleShowSetting();
+                                        }}
+                                    >
+                                        <IoSettingsSharp />
+                                        <Dropdown.Menu show={showSettings}>
+                                            <Dropdown.Header>
+                                                Settings
+                                            </Dropdown.Header>
+                                            <Dropdown.Item
+                                                onClick={
+                                                    handleShowPasswordModal
+                                                }
+                                            >
+                                                Change password
+                                            </Dropdown.Item>
+                                            <Dropdown.Item eventKey="3">
+                                                Change email
+                                            </Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Nav.Link>
+
+                                    <Nav.Link
+                                        className="login"
+                                        onClick={handleShow}
+                                    >
+                                        Add blog
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/login"
+                                        className="login"
+                                        onClick={() => {
+                                            handleLogout();
+                                        }}
+                                    >
+                                        Logout
+                                    </Nav.Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/login"
+                                        className="login"
+                                    >
+                                        Login
+                                    </Nav.Link>
+                                    <Nav.Link
+                                        as={Link}
+                                        to="/register"
+                                        className="login"
+                                    >
+                                        Register
+                                    </Nav.Link>
+                                </>
+                            )}
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+            {/* MODAL ADD BLOG */}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Create new Blog</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -69,12 +161,10 @@ function NavBar() {
                             controlId="formFileMultiple"
                             className="mb-3"
                         >
-                            <Form.Label>
-                                Multiple files input example
-                            </Form.Label>
+                            <Form.Label>Select your images</Form.Label>
                             <Form.Control
                                 type="file"
-                                name="photo"
+                                name="photos"
                                 multiple
                                 onChange={(e) => {
                                     handleFile(e);
@@ -121,65 +211,11 @@ function NavBar() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Container>
-                    <Navbar.Brand as={Link} to="/">
-                        GOMYCODE BLOGS
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link as={Link} to="/">
-                                Home
-                            </Nav.Link>
-
-                            {localStorage.getItem("token") ? (
-                                <>
-                                    <Nav.Link as={Link} to="/myBlogs">
-                                        My Blogs
-                                        <span className="blogs-nbre">
-                                            {myBlogs.length}
-                                        </span>
-                                    </Nav.Link>
-                                    <Nav.Link
-                                        className="login"
-                                        onClick={handleShow}
-                                    >
-                                        Add blog
-                                    </Nav.Link>
-                                    <Nav.Link
-                                        as={Link}
-                                        to="/login"
-                                        className="login"
-                                        onClick={() => {
-                                            handleLogout();
-                                        }}
-                                    >
-                                        Logout
-                                    </Nav.Link>
-                                </>
-                            ) : (
-                                <>
-                                    <Nav.Link
-                                        as={Link}
-                                        to="/login"
-                                        className="login"
-                                    >
-                                        Login
-                                    </Nav.Link>
-                                    <Nav.Link
-                                        as={Link}
-                                        to="/register"
-                                        className="login"
-                                    >
-                                        Register
-                                    </Nav.Link>
-                                </>
-                            )}
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
+            {/* MODAL CHANGE PASSWORD */}
+            <ModalChangePassword
+                handleClosePasswordModal={handleClosePasswordModal}
+                showPasswordModal={showPasswordModal}
+            />
         </div>
     );
 }

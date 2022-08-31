@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import BlogItem from "./BlogItem";
 import { Row, Container, Col, Form } from "react-bootstrap";
-
 function Blogs() {
     const [blogs, setBlogs] = useState();
     const [search, setSearch] = useState("");
@@ -33,7 +32,7 @@ function Blogs() {
                 style={{
                     marginBottom: "20px",
                     borderBottom: "2px grey solid",
-                    paddingBottom: " 5px",
+                    paddingBottom: "10px",
                 }}
             >
                 <Col md={6}></Col>

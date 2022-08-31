@@ -6,7 +6,6 @@ module.exports = async (req, res) => {
     try {
         let { newPassword, confirmNewPassword } = req.body;
         let { id } = req.params;
-        console.log(id);
         let { error } = await NewPasswordValidation({
             newPassword,
             confirmNewPassword,
@@ -27,8 +26,7 @@ module.exports = async (req, res) => {
         );
         res.status(200).json({
             status: true,
-            message: "Password updated successfully",
-            data: user,
+            message: "Password was updated successfully",
         });
     } catch (error) {
         console.log(error);
