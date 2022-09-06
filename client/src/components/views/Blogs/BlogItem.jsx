@@ -25,11 +25,15 @@ function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
     };
     const handelUpdateBlog = () => {
         axios
-            .put(`/api/user/blog/update?id=${_id}`, updatedBlog, {
-                headers: {
-                    jwt: token,
-                },
-            })
+            .put(
+                `https://gmc-blog.herokuapp.com/api/user/blog/update?id=${_id}`,
+                updatedBlog,
+                {
+                    headers: {
+                        jwt: token,
+                    },
+                }
+            )
             .then((res) => {
                 console.log(res);
                 res && handleClose();
@@ -37,11 +41,14 @@ function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
     };
     const handleDelete = () => {
         axios
-            .delete(`/api/user/blog/delete?_id=${_id}`, {
-                headers: {
-                    jwt: token,
-                },
-            })
+            .delete(
+                `https://gmc-blog.herokuapp.com/api/user/blog/delete?_id=${_id}`,
+                {
+                    headers: {
+                        jwt: token,
+                    },
+                }
+            )
             .then((res) => console.log(res))
             .catch((err) => console.dir(err));
     };

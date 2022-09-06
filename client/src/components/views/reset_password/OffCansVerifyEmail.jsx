@@ -14,7 +14,10 @@ function OffCanvasExample({ name, ...props }) {
     };
     const handleSend = () => {
         axios
-            .post("/api/user/resetpasswordmail", email)
+            .post(
+                "https://gmc-blog.herokuapp.com/api/user/resetpasswordmail",
+                email
+            )
             .then((res) => swal(res.data.message))
             .catch((err) => setError(err.response.data.message));
     };

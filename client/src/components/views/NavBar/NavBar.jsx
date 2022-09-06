@@ -70,12 +70,16 @@ function NavBar() {
             blogFormData.append("photos", newFile[i]);
         }
         axios
-            .post(`/api/user/blog/create/${id}`, blogFormData, {
-                headers: {
-                    jwt: token,
-                    "Content-Type": "multipart/form-data",
-                },
-            })
+            .post(
+                `https://gmc-blog.herokuapp.com/api/user/blog/create/${id}`,
+                blogFormData,
+                {
+                    headers: {
+                        jwt: token,
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            )
             .then((res) => {
                 console.log(res);
                 res && handleClose();

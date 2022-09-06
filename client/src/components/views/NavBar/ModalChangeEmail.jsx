@@ -26,7 +26,10 @@ function ModalChangeEmail({ showEmailModal, handleCloseEmailModal }) {
         }).then((willUpdate) => {
             if (willUpdate) {
                 axios
-                    .put(`/api/user/changeEmail/${id}`, newEmailObj)
+                    .put(
+                        `https://gmc-blog.herokuapp.com/api/user/changeEmail/${id}`,
+                        newEmailObj
+                    )
                     .then((res) => {
                         if (res) {
                             swal(res.data.message, "", "success").then(() => {

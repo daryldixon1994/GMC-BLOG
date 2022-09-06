@@ -15,7 +15,11 @@ function Blogs() {
 
     useEffect(() => {
         axios
-            .get("/api/user/blogs")
+            .get("https://gmc-blog.herokuapp.com/api/user/blogs", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
             .then((res) => setBlogs(res.data.data))
             .catch((err) => console.log(err));
     }, [blogs, search]);

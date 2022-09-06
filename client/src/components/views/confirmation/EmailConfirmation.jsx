@@ -9,7 +9,7 @@ function EmailConfirmation() {
     const { id } = useParams();
     useEffect(() => {
         axios
-            .put(`/api/user/verifyEmail/${id}`)
+            .put(`https://gmc-blog.herokuapp.com/api/user/verifyEmail/${id}`)
             .then((res) => console.log(res))
             .catch((err) => console.log(err));
     }, []);
