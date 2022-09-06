@@ -14,7 +14,9 @@ app.use("/api/user", require("./routes/user/user"));
 
 //static
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-
+app.get("/", (req, res)=>{
+    res.json("server is running")
+})
 //listen
 app.listen(port, (err) => {
     if (err) throw err;
