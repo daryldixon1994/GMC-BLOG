@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
 
         //Send confirmation email
         const output = `
-            <h3>Welcome to GMC BLOGS, your account wass created successfully.
+            <h3>Welcome to GMC BLOGS, your account was created successfully.
             Please click on the link below to confirm your account:</h3>
             <a href="${req.protocol}://${req.get(
             "x-forwarded-host"

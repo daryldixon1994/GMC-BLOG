@@ -7,6 +7,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import "./NavBar.css";
 import axios from "axios";
 import ModalChangePassword from "./ModalChangePassword";
+import ModalChangeEmail from "./ModalChangeEmail";
 function NavBar() {
     //CONSTANTS
     const id = localStorage.getItem("id");
@@ -15,6 +16,8 @@ function NavBar() {
     const [newBlog, setNewBlog] = useState({});
     const [showSettings, setShowSettings] = useState(false);
     const [newFile, setNewFile] = useState();
+    const [error, setError] = useState("");
+    const [validated, setValidated] = useState(false);
 
     //MY BLOGS STATE FROM REDUX
     const myBlogs = useSelector((state) => state.userReducer.myblogs);
@@ -27,6 +30,11 @@ function NavBar() {
     const [showPasswordModal, setShowPasswordModal] = useState(false);
     const handleClosePasswordModal = () => setShowPasswordModal(false);
     const handleShowPasswordModal = () => setShowPasswordModal(true);
+
+    //Email MODAL HANDLING
+    const [showEmailModal, setShowEmailModal] = useState(false);
+    const handleCloseEmailModal = () => setShowEmailModal(false);
+    const handleShowEmailModal = () => setShowEmailModal(true);
 
     const handleShowSetting = () => setShowSettings(!showSettings);
     //HANDLE LOGOUT
@@ -44,10 +52,20 @@ function NavBar() {
     const handleFile = (e) => {
         setNewFile(e.target.files);
     };
-    const handelSaveNewBlog = () => {
+    const handelSaveNewBlog = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        setValidated(true);
         let blogFormData = new FormData();
         blogFormData.append("title", newBlog.title);
         blogFormData.append("text", newBlog.text);
+        if (!newFile) {
+            return setError("Empty fields");
+        }
         for (let i = 0; i < newFile.length; i++) {
             blogFormData.append("photos", newFile[i]);
         }
@@ -105,7 +123,9 @@ function NavBar() {
                                             >
                                                 Change password
                                             </Dropdown.Item>
-                                            <Dropdown.Item eventKey="3">
+                                            <Dropdown.Item
+                                                onClick={handleShowEmailModal}
+                                            >
                                                 Change email
                                             </Dropdown.Item>
                                         </Dropdown.Menu>
@@ -156,7 +176,7 @@ function NavBar() {
                     <Modal.Title>Create new Blog</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form validated={validated}>
                         <Form.Group
                             controlId="formFileMultiple"
                             className="mb-3"
@@ -166,10 +186,17 @@ function NavBar() {
                                 type="file"
                                 name="photos"
                                 multiple
+                                required
                                 onChange={(e) => {
                                     handleFile(e);
                                 }}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Please choose files
+                            </Form.Control.Feedback>
+                            {/* {error && (
+                                <span style={{ color: "red" }}> {error} </span>
+                            )} */}
                         </Form.Group>
                         <Form.Group
                             className="mb-3"
@@ -181,10 +208,14 @@ function NavBar() {
                                 name="title"
                                 placeholder="write yor blog's name here"
                                 autoFocus
+                                required
                                 onChange={(e) => {
                                     handleChange(e);
                                 }}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Please choose a title
+                            </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group
                             className="mb-3"
@@ -194,11 +225,15 @@ function NavBar() {
                             <Form.Control
                                 name="text"
                                 as="textarea"
+                                required
                                 rows={5}
                                 onChange={(e) => {
                                     handleChange(e);
                                 }}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                Empty field is not allowed
+                            </Form.Control.Feedback>
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -215,6 +250,10 @@ function NavBar() {
             <ModalChangePassword
                 handleClosePasswordModal={handleClosePasswordModal}
                 showPasswordModal={showPasswordModal}
+            />
+            <ModalChangeEmail
+                handleCloseEmailModal={handleCloseEmailModal}
+                showEmailModal={showEmailModal}
             />
         </div>
     );

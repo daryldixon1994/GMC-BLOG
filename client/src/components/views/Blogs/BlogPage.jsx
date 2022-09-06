@@ -4,22 +4,23 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { SyncLoader } from "react-spinners";
 import Caroussel from "./Caroussel";
+import Gallery from "./Gallery";
+
 function BlogPage() {
     const [blog, setBlog] = useState();
+    const [fullscreen, setFullscreen] = useState(true);
+    const [show, setShow] = useState(false);
     let { id } = useParams();
+
     useEffect(() => {
         axios
             .get("/api/user/blogs")
             .then((res) => {
-                // console.log(res);
                 setBlog(res.data.data.find((elt) => elt._id == id));
             })
             .catch((err) => console.log(err));
     }, []);
-    // console.log("blog", blog);
 
-    const [fullscreen, setFullscreen] = useState(true);
-    const [show, setShow] = useState(false);
     function handleShow(breakpoint) {
         setFullscreen(breakpoint);
         setShow(true);
@@ -76,10 +77,16 @@ function BlogPage() {
                         </Col>
                     </Row>
                     <Row>
-                        <Caroussel
-                            setFullscreen={setFullscreen}
-                            blog={blog}
-                            handleShow={handleShow}
+                        <Gallery
+                            galleryID="my-test-gallery"
+                            images={blog.photos.map((photo) => {
+                                return {
+                                    largeURL: photo.url,
+                                    thumbnailURL: photo.url,
+                                    width: photo.width,
+                                    height: photo.heigth,
+                                };
+                            })}
                         />
                     </Row>
                     <Row

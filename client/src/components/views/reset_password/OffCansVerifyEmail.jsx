@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Offcanvas, Form, Col, Row, Button } from "react-bootstrap";
 import axios from "axios";
+import swal from "sweetalert";
+
 function OffCanvasExample({ name, ...props }) {
     const [show, setShow] = useState(false);
+    const [error, setError] = useState("");
     const [email, setEmail] = useState({});
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -12,8 +15,8 @@ function OffCanvasExample({ name, ...props }) {
     const handleSend = () => {
         axios
             .post("/api/user/resetpasswordmail", email)
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
+            .then((res) => swal(res.data.message))
+            .catch((err) => setError(err.response.data.message));
     };
     return (
         <>
@@ -57,6 +60,16 @@ function OffCanvasExample({ name, ...props }) {
                                         handleChange(e);
                                     }}
                                 />
+                                {error && (
+                                    <span
+                                        style={{
+                                            color: "red",
+                                            fontSize: "0.8em",
+                                        }}
+                                    >
+                                        {error}
+                                    </span>
+                                )}
                             </Col>
                             <Col sm="4">
                                 <Button

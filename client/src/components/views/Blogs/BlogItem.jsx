@@ -50,14 +50,10 @@ function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
     const [width, setWidth] = useState(0);
     const carrousel = useRef();
     useEffect(() => {
-        // console.log(
-        //     carrousel.current.scrollWidth,
-        //     carrousel.current.offsetWidth
-        // );
         setWidth(carrousel.current.scrollWidth - carrousel.current.offsetWidth);
     }, []);
     return (
-        <div className="">
+        <div >
             <Col>
                 <Card style={{ minHeight: " 364px" }}>
                     {id === userId && (
@@ -97,17 +93,17 @@ function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
                                 whileTap={{ cursor: "grabbing" }}
                                 className="inner-carrousel"
                             >
-                                {photos.map((image) => {
+                                {photos.map((photo) => {
                                     return (
                                         <motion.div
                                             className="blog-item-image"
-                                            key={image}
+                                            key={photo.url}
                                         >
                                             <Card.Img
                                                 className="img"
                                                 variant="top"
                                                 bsPrefix="card-img"
-                                                src={image}
+                                                src={photo.url}
                                                 alt="image-house"
                                                 style={{
                                                     objectFit: "cover",

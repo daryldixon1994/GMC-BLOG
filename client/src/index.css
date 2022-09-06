@@ -75,3 +75,7 @@ code {
     overflow: hidden;
     /* background: rgb(230, 173, 173); */
 }
+.pswp-gallery {
+    border: 1px solid black;
+    /* display: flex; */
+}

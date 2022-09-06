@@ -31,7 +31,7 @@ function MyBlogs() {
                     }}
                 >
                     <Col md={6}>
-                        <h2>My list </h2>
+                        <h2>My blogs </h2>
                     </Col>
                     <Col md={4}>
                         <Form.Control

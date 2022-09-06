@@ -16,7 +16,13 @@ const blogSchema = new Schema(
             required: true,
         },
         photos: {
-            type: ["string"],
+            type: [
+                {
+                    url: "string",
+                    width: Number,
+                    heigth: Number,
+                },
+            ],
             required: true,
         },
         userId: {

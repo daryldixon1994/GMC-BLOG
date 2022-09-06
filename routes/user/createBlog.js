@@ -1,8 +1,9 @@
 const Blog = require("../../models/Blog");
 const User = require("../../models/User");
+const sizeOf = require("image-size");
+const sharp = require("sharp");
+
 module.exports = async (req, res) => {
-    console.log("req files", req.files);
-    console.log("req body", req.body);
     try {
         let { title, text } = req.body;
         let { id } = req.params;
@@ -12,12 +13,15 @@ module.exports = async (req, res) => {
             text,
             photos:
                 req.files.length !== 0
-                    ? req.files.map(
-                          (elt) =>
-                              `${req.protocol}://${req.get("host")}/uploads/${
-                                  elt.filename
-                              }`
-                      )
+                    ? req.files.map((elt) => {
+                          return {
+                              url: `${req.protocol}://${req.get(
+                                  "host"
+                              )}/uploads/${elt.filename}`,
+                              width: sizeOf(elt.path).width,
+                              heigth: sizeOf(elt.path).height,
+                          };
+                      })
                     : "/uploads/addPhotos.png",
 
             owner: `${user.firstName} ${user.lastName}`,

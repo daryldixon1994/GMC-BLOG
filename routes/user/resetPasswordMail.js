@@ -3,8 +3,14 @@ const nodemailer = require("nodemailer");
 module.exports = async (req, res) => {
     try {
         let { email } = req.body;
+        console.log(email);
+        if (!email) {
+            return res.status(401).json({
+                status: false,
+                message: "Empty field : cannot send empty email field.",
+            });
+        }
         const user = await User.findOne({ email });
-        console.log(user.id);
         if (!user) {
             return res.status(401).json({
                 status: false,
@@ -39,7 +45,12 @@ module.exports = async (req, res) => {
             console.log(error);
             return res.status(400).json({ status: false, error });
         }
-        return res.status(200).json({ status: true, message: info });
+        console.log(info);
+        return res.status(200).json({
+            status: true,
+            message:
+                "A request to reset your password has been sen. Please check your email. ",
+        });
     } catch (error) {
         console.log(error);
         res.status(400).json({ status: false, error });

@@ -20,12 +20,11 @@ function ResetPassword() {
         await axios
             .put(`/api/user/resetpassword/${id}`, newPassword)
             .then((res) => {
-                console.log(res);
+                
                 navigate("/login");
             })
             .catch((err) => {
-                console.dir(err);
-                setError(err.response.data.message);
+                setError(err.response.data.error);
             });
     };
     // useEffect(() => {
@@ -62,11 +61,11 @@ function ResetPassword() {
                             name="confirmNewPassword"
                         />
                     </div>
-                    {/* {error && (
+                    {error && (
                         <span style={{ color: "red", fontSize: "0.8em" }}>
                             {error}
                         </span>
-                    )} */}
+                    )}
                     <div className="d-grid gap-2 mt-3">
                         <button
                             type="button"
