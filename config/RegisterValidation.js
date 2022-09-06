@@ -31,7 +31,7 @@ const RegisterValidation = (data) => {
             .required()
             .pattern(
                 new RegExp(
-                    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+                    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.!@#$%^&*])(?=.{8,})"
                 )
             )
             .messages({

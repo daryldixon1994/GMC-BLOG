@@ -162,7 +162,7 @@ function Register() {
                     </div>
                     {registerError && (
                         <span style={{ color: "red", fontSize: "0.8em" }}>
-                            Please verify the required fields
+                            {registerError}
                         </span>
                     )}
                 </div>
