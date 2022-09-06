@@ -18,9 +18,7 @@ module.exports = async (req, res) => {
                 req.files.length !== 0
                     ? req.files.map((elt) => {
                           return {
-                              url: `https://${req.get(
-                                  "host"
-                              )}/uploads/${elt.filename}`,
+                              url: `https://gmc-blog.herokuapp.com/uploads/${elt.filename}`,
                               width: sizeOf(elt.path).width,
                               heigth: sizeOf(elt.path).height,
                           };
