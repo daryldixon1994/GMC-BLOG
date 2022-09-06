@@ -53,9 +53,7 @@ module.exports = async (req, res) => {
         const output = `
             <h3>Welcome to GMC BLOGS, your account was created successfully.
             Please click on the link below to confirm your account:</h3>
-            <a href="${req.protocol}://${req.get(
-            "x-forwarded-host"
-        )}/confirmation/${user.id}">Confirm your account</a>
+            <a href="https://gmc-blog.herokuapp.com/confirmation/${user.id}">Confirm your account</a>
             `;
         const transporter = nodemailer.createTransport({
             host: "smtp-mail.outlook.com",
