@@ -13,14 +13,14 @@ app.use(express.json());
 app.use("/api/user", require("./routes/user/user"));
 
 //static
-// app.use(express.static("client/build"))
-// app.get("*", (req, res)=>{
-//     res.sendFile(`${__dirname}/client/build/index.html`)
-// })
+app.use(express.static("client/build"));
+app.get("*", (req, res) => {
+    res.sendFile(`${__dirname}/client/build/index.html`);
+});
 //multer middleware
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 //listen
 app.listen(port, (err) => {
     if (err) throw err;
-    console.log(`server is running on http://localhost:${port}/`);
+    console.log(`server is running on https://localhost:${port}/`);
 });
