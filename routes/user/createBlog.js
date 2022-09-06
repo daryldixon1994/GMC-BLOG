@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
                     ? req.files.map((elt) => {
                           return {
                               url: `https://${req.get(
-                                  "x-forwarded-host"
+                                  "host"
                               )}/uploads/${elt.filename}`,
                               width: sizeOf(elt.path).width,
                               heigth: sizeOf(elt.path).height,

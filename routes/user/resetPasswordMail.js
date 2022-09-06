@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
             <h3>Welcome to GMC BLOGS,you asked to reset your password.
             Please click on the link below to reset your password:</h3>
             <a href="https://${req.get(
-            "x-forwarded-host"
+            "host"
         )}/reset-password/${user.id}">Reset Password</a>
             `;
         let transporter = nodemailer.createTransport({
