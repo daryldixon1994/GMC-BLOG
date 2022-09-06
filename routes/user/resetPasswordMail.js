@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
         const output = `
             <h3>Welcome to GMC BLOGS,you asked to reset your password.
             Please click on the link below to reset your password:</h3>
-            <a href="${req.protocol}://${req.get(
+            <a href="https://${req.get(
             "x-forwarded-host"
         )}/reset-password/${user.id}">Reset Password</a>
             `;
