@@ -13,9 +13,10 @@ app.use(express.json());
 app.use("/api/user", require("./routes/user/user"));
 
 //static
+app.use(express.static("client/build"))
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.get("/", (req, res)=>{
-    res.json("server is running")
+app.get("*", (req, res)=>{
+    res.sendFile(`${__dirname}/client/build/index.html`)
 })
 //listen
 app.listen(port, (err) => {

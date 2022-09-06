@@ -14,7 +14,7 @@ function BlogPage() {
 
     useEffect(() => {
         axios
-            .get("https://gmc-blog.herokuapp.com/api/user/blogs")
+            .get("/api/user/blogs")
             .then((res) => {
                 setBlog(res.data.data.find((elt) => elt._id == id));
             })

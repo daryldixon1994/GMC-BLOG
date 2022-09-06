@@ -19,7 +19,7 @@ function ResetPassword() {
     const handleReset = async () => {
         await axios
             .put(
-                `https://gmc-blog.herokuapp.com/api/user/resetpassword/${id}`,
+                `/api/user/resetpassword/${id}`,
                 newPassword
             )
             .then((res) => {

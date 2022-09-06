@@ -71,7 +71,7 @@ function NavBar() {
         }
         axios
             .post(
-                `https://gmc-blog.herokuapp.com/api/user/blog/create/${id}`,
+                `/api/user/blog/create/${id}`,
                 blogFormData,
                 {
                     headers: {

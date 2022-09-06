@@ -17,7 +17,7 @@ function Login() {
     };
     const handleLogin = async () => {
         await axios
-            .post("https://gmc-blog.herokuapp.com/api/user/login", user)
+            .post("/api/user/login", user)
             .then((res) => {
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("isUser", res.data.isUser);

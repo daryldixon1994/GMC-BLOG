@@ -1,7 +1,7 @@
 import axios from "axios";
 export const getMyBlogs = (payload) => (dispatch) => {
     axios
-        .get(`https://gmc-blog.herokuapp.com/api/user/myBlogs/${payload.id}`, {
+        .get(`/api/user/myBlogs/${payload.id}`, {
             headers: {
                 jwt: payload.token,
             },

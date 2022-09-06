@@ -15,7 +15,7 @@ function OffCanvasExample({ name, ...props }) {
     const handleSend = () => {
         axios
             .post(
-                "https://gmc-blog.herokuapp.com/api/user/resetpasswordmail",
+                "/api/user/resetpasswordmail",
                 email
             )
             .then((res) => swal(res.data.message))

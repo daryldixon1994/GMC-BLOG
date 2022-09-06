@@ -43,7 +43,7 @@ function ModalChangePassword({ showPasswordModal, handleClosePasswordModal }) {
             if (willUpdate) {
                 axios
                     .put(
-                        `https://gmc-blog.herokuapp.com/api/user/resetpassword/${id}`,
+                        `/api/user/resetpassword/${id}`,
                         newPasswordObj
                     )
                     .then((res) => {

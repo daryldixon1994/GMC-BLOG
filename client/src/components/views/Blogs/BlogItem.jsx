@@ -41,14 +41,11 @@ function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
     };
     const handleDelete = () => {
         axios
-            .delete(
-                `https://gmc-blog.herokuapp.com/api/user/blog/delete?_id=${_id}`,
-                {
-                    headers: {
-                        jwt: token,
-                    },
-                }
-            )
+            .delete(`/api/user/blog/delete?_id=${_id}`, {
+                headers: {
+                    jwt: token,
+                },
+            })
             .then((res) => console.log(res))
             .catch((err) => console.dir(err));
     };
@@ -60,7 +57,7 @@ function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
         setWidth(carrousel.current.scrollWidth - carrousel.current.offsetWidth);
     }, []);
     return (
-        <div >
+        <div>
             <Col>
                 <Card style={{ minHeight: " 364px" }}>
                     {id === userId && (

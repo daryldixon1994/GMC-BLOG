@@ -16,7 +16,7 @@ function Register() {
     const handleSubmit = async () => {
         setLoading(true);
         await axios
-            .post("https://gmc-blog.herokuapp.com/api/user/register", newUser)
+            .post("/api/user/register", newUser)
             .then((response) => {
                 if (response) {
                     setLoading(false);
