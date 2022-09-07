@@ -13,10 +13,10 @@ app.use(express.json());
 app.use("/api/user", require("./routes/user/user"));
 
 //static
-// app.use(express.static("client/build"));
-// app.get("*", (req, res) => {
-//     res.sendFile(`${__dirname}/client/build/index.html`);
-// });
+app.use(express.static("client/build"));
+app.get("*", (req, res) => {
+    res.sendFile(`${__dirname}/client/build/index.html`);
+});
 //multer middleware
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 //listen
