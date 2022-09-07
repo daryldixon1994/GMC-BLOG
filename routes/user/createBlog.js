@@ -1,39 +1,61 @@
 const Blog = require("../../models/Blog");
 const User = require("../../models/User");
 const sizeOf = require("image-size");
-const sharp = require("sharp");
-
+const cloudinary = require("../../middlewares/cloudinary");
+const fs = require("fs");
 module.exports = async (req, res) => {
-    console.log("req", req);
-    console.log("req.protocol", req.protocol);
-    console.log("host", req.get("host"));
     try {
         let { title, text } = req.body;
         let { id } = req.params;
         let user = await User.findById(id);
-        const blog = new Blog({
-            title,
-            text,
-            photos:
-                req.files.length !== 0
-                    ? req.files.map((elt) => {
-                          return {
-                              url: `https://gmc-blog.herokuapp.com/uploads/${elt.filename}`,
-                              width: sizeOf(elt.path).width,
-                              heigth: sizeOf(elt.path).height,
-                          };
-                      })
-                    : "/uploads/addPhotos.png",
+        const uploader = async (path) =>
+            await cloudinary.uploads(path, "uploads");
 
-            owner: `${user.firstName} ${user.lastName}`,
-            userId: user._id,
-        });
-        const newBlog = await blog.save();
-        res.status(200).json({
-            status: true,
-            message: "Your blog was created succesfully",
-            // data: newBlog,
-        });
+        if (req.files.length !== 0) {
+            const urls = [];
+            const files = req.files;
+            for (const file of files) {
+                const { path } = file;
+                const newPath = await uploader(path);
+                urls.push({
+                    url: newPath.url,
+                    width: sizeOf(file.path).width,
+                    heigth: sizeOf(file.path).height,
+                });
+                fs.unlinkSync(path);
+            }
+            const blog = await new Blog({
+                title,
+                text,
+                photos: urls,
+                owner: `${user.firstName} ${user.lastName}`,
+                userId: user._id,
+            });
+            const newBlog = await blog.save();
+            return res.status(200).json({
+                status: true,
+                message: "Your blog was created succesfully",
+                data: newBlog,
+            });
+            // console.log("newPath", newPath);
+            // return {
+            //       url: newPath,
+            //     width: sizeOf(elt.path).width,
+            //     heigth: sizeOf(elt.path).height,
+            // };
+        } else {
+            res.status(405).json({
+                status: false,
+                message: "error",
+                // data: newBlog,
+            });
+        }
+        //
+        // res.status(200).json({
+        //     status: true,
+        //     message: "Your blog was created succesfully",
+        //     data: newBlog,
+        // });
     } catch (error) {
         if (error) throw error;
         res.status(400).json({ status: false, error });

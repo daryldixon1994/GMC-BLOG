@@ -8,6 +8,7 @@ import "./NavBar.css";
 import axios from "axios";
 import ModalChangePassword from "./ModalChangePassword";
 import ModalChangeEmail from "./ModalChangeEmail";
+import { PulseLoader } from "react-spinners";
 function NavBar() {
     //CONSTANTS
     const id = localStorage.getItem("id");
@@ -16,7 +17,7 @@ function NavBar() {
     const [newBlog, setNewBlog] = useState({});
     const [showSettings, setShowSettings] = useState(false);
     const [newFile, setNewFile] = useState();
-    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const [validated, setValidated] = useState(false);
 
     //MY BLOGS STATE FROM REDUX
@@ -53,6 +54,7 @@ function NavBar() {
         setNewFile(e.target.files);
     };
     const handelSaveNewBlog = (event) => {
+        setLoading(true);
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
@@ -63,26 +65,21 @@ function NavBar() {
         let blogFormData = new FormData();
         blogFormData.append("title", newBlog.title);
         blogFormData.append("text", newBlog.text);
-        if (!newFile) {
-            return setError("Empty fields");
-        }
         for (let i = 0; i < newFile.length; i++) {
             blogFormData.append("photos", newFile[i]);
         }
         axios
-            .post(
-                `/api/user/blog/create/${id}`,
-                blogFormData,
-                {
-                    headers: {
-                        jwt: token,
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            )
+            .post(`/api/user/blog/create/${id}`, blogFormData, {
+                headers: {
+                    jwt: token,
+                    "Content-Type": "multipart/form-data",
+                },
+            })
             .then((res) => {
-                console.log(res);
-                res && handleClose();
+                if (res) {
+                    setLoading(false);
+                    handleClose();
+                }
             })
             .catch((err) => console.dir(err));
     };
@@ -211,7 +208,7 @@ function NavBar() {
                                 type="text"
                                 name="title"
                                 placeholder="write yor blog's name here"
-                                autoFocus
+                                // autoFocus
                                 required
                                 onChange={(e) => {
                                     handleChange(e);
@@ -246,7 +243,11 @@ function NavBar() {
                         Close
                     </Button>
                     <Button variant="primary" onClick={handelSaveNewBlog}>
-                        Save Changes
+                        {loading ? (
+                            <PulseLoader size={8} color={"#ffffff"} />
+                        ) : (
+                            "Save Changes"
+                        )}
                     </Button>
                 </Modal.Footer>
             </Modal>

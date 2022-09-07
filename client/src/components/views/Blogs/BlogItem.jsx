@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
-    // console.log(typeof userId);
+    console.log(photos);
     //CONSTANTS
     const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
