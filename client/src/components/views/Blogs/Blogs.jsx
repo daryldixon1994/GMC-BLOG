@@ -33,9 +33,13 @@ function Blogs() {
                     marginBottom: "20px",
                     borderBottom: "2px grey solid",
                     paddingBottom: "10px",
+                    backgroundColor: "white",
+                    position: "sticky",
+                    top: "56px",
+                    zIndex: 10,
                 }}
             >
-                <Col md={6}></Col>
+                <Col md={5}></Col>
                 <Col md={4}>
                     <Form.Control
                         type="text"
@@ -45,7 +49,7 @@ function Blogs() {
                         }}
                     />
                 </Col>
-                <Col md={2}>
+                <Col md={3}>
                     <Form.Control
                         as="input"
                         type="date"

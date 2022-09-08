@@ -32,12 +32,15 @@ router.get("/myBlogs/:id", verify, require("./getUserBlogs"));
 // /api/user/resetpasswordmail : SEND RESET PASSWORD EMAIL
 router.post("/resetpasswordmail", require("./resetPasswordMail"));
 
+// /api/user/verifyEmail/:id : VERIFY EMAIL
+router.put("/verifyEmail/:id", require("./verifyEmail"));
+
 // /api/user/resertPassword/:id: RESET PASSWORD
 router.put("/resetpassword/:id", require("./resetPassword"));
 
 // /api/user/changeEmail/:id: CHANGE EMAILL
 router.put("/changeEmail/:id", require("./changeEmail"));
 
-// /api/user/verifyEmail/:id : VERIFY EMAIL
-router.put("/verifyEmail/:id", require("./verifyEmail"));
+// /api/user/changeName/:id: CHANGE NAME
+router.put("/changeName/:id", require("./changeName"));
 module.exports = router;
