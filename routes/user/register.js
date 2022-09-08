@@ -74,10 +74,9 @@ module.exports = async (req, res) => {
         };
         const { err, info } = await transporter.sendMail(options);
         if (err) {
-            console.log(err);
             return res.status(400).json({ status: false, error: err });
         }
-        // return res.status(200).json({ status: true, message: info });
+      
 
         //SEND FINAL RESPONSE
         res.status(200).json({

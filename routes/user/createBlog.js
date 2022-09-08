@@ -37,25 +37,15 @@ module.exports = async (req, res) => {
                 message: "Your blog was created succesfully",
                 data: newBlog,
             });
-            // console.log("newPath", newPath);
-            // return {
-            //       url: newPath,
-            //     width: sizeOf(elt.path).width,
-            //     heigth: sizeOf(elt.path).height,
-            // };
+         
         } else {
             res.status(405).json({
                 status: false,
                 message: "error",
-                // data: newBlog,
+                
             });
         }
-        //
-        // res.status(200).json({
-        //     status: true,
-        //     message: "Your blog was created succesfully",
-        //     data: newBlog,
-        // });
+    
     } catch (error) {
         if (error) throw error;
         res.status(400).json({ status: false, error });

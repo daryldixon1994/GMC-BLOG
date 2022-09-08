@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyBlogs } from "../../../redux/actions/userActions";
 import BlogItem from "../Blogs/BlogItem";
 import { Container, Row, Col, Form } from "react-bootstrap";
+import ToastMsg from "../Blogs/ToastMsg";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./MyBlogs.css";
 function MyBlogs() {
     const id = localStorage.getItem("id");
@@ -81,6 +84,17 @@ function MyBlogs() {
                     </div>
                 )}
             </Container>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={4000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </div>
     );
 }

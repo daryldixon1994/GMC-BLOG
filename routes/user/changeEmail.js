@@ -22,7 +22,7 @@ module.exports = async (req, res) => {
             });
         }
         const existedEmail = await User.findOne({ email: newEmail });
-        console.log(existedEmail);
+
         if (existedEmail) {
             return res.status(401).json({
                 status: false,
@@ -44,10 +44,9 @@ module.exports = async (req, res) => {
             <h3>Your email was updated successfully.
             Please click on the link below to confirm your email:</h3>
             <a href="${req.protocol}://${req.get(
-            "x-forwarded-host"
+            "host"
         )}/confirmation/${id}">Confirm your email</a>
             `;
-        console.log(req.get("x-forwarded-host"));
         const transporter = nodemailer.createTransport({
             host: "smtp-mail.outlook.com",
             port: 587,

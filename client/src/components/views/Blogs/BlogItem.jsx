@@ -5,16 +5,14 @@ import axios from "axios";
 import { Button, Form, Modal, Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
+import { toast } from "react-toastify";
 function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
-    console.log(photos);
     //CONSTANTS
     const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
     //LOCAL STATE
     const [updatedBlog, setUpdatedBlog] = useState({});
     const [show, setShow] = useState(false);
-
     //CLOSE MODAL
     const handleClose = () => setShow(false);
     //CLOSE SHOW
@@ -35,7 +33,6 @@ function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
                 }
             )
             .then((res) => {
-                console.log(res);
                 res && handleClose();
             });
     };
@@ -46,7 +43,9 @@ function BlogItem({ title, owner, text, photos, _id, userId, createdAt }) {
                     jwt: token,
                 },
             })
-            .then((res) => console.log(res))
+            .then((res) => {
+                toast.dark(`${res.data.message} ✔️`);
+            })
             .catch((err) => console.dir(err));
     };
     const date = createdAt.slice(0, 10);

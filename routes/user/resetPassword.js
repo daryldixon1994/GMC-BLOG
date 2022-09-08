@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
         }
         let salt = await bcrypt.genSalt(10);
         let hashedNewPassword = await bcrypt.hash(newPassword, salt);
-        let user = await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
             id,
             {
                 $set: { password: hashedNewPassword },

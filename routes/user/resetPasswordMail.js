@@ -3,7 +3,6 @@ const nodemailer = require("nodemailer");
 module.exports = async (req, res) => {
     try {
         let { email } = req.body;
-        console.log(email);
         if (!email) {
             return res.status(401).json({
                 status: false,
@@ -42,7 +41,6 @@ module.exports = async (req, res) => {
         };
         const { error, info } = await transporter.sendMail(options);
         if (error) {
-            console.log(error);
             return res.status(400).json({ status: false, error });
         }
         console.log(info);
@@ -52,7 +50,6 @@ module.exports = async (req, res) => {
                 "A request to reset your password has been sen. Please check your email. ",
         });
     } catch (error) {
-        console.log(error);
         res.status(400).json({ status: false, error });
     }
 };
